@@ -4,6 +4,11 @@ use std::str::FromStr;
 use web3::contract::{Contract, Options};
 use web3::types::{Address, H160, U256};
 
+fn wei_to_eth(wei_val: U256) -> f64 {
+    let res = wei_val.as_u128() as f64;
+    res / 1_000_000_000_000_000_000.0
+}
+
 #[tokio::main]
 async fn main() -> web3::Result<()> {
     dotenv::dotenv().ok();
@@ -15,14 +20,9 @@ async fn main() -> web3::Result<()> {
     accounts.push(H160::from_str(&env::var("ACCOUNT_ADDRESS").unwrap()).unwrap());
     println!("Accounts: {:?}", accounts);
 
-    let wei_conv: U256 = U256::exp10(18);
     for account in accounts {
         let balance = web3s.eth().balance(account, None).await?;
-        println!(
-            "Eth balance of {:?}: {}",
-            account,
-            balance.checked_div(wei_conv).unwrap()
-        );
+        println!("Eth balance of {:?}: {}", account, wei_to_eth(balance));
     }
 
     let aave_addr = Address::from_str("0x42447d5f59d5bf78a82c34663474922bdf278162").unwrap();
