@@ -15,11 +15,10 @@ ACCOUNT_ADDRESS=xxxxxxxxxx
 
 The `INFURA_RINKEBY` value is an endpoint address from [infura.io](https://infura.io), however it can be any valid address to an Ethereum network WebSocket endpoint.
 
-The `ACCOUNT_ADDRESS` is the address of a Ethereum wallet, not including the "0x" prefix.
+The `ACCOUNT_ADDRESS` is the address of a Ethereum wallet.
 
 If this configuration is in place the program can be run using cargo:
 
 ```bash
 cargo run
 ```
-
